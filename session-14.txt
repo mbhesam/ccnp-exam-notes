@@ -1,0 +1,8 @@
+when one of routers flaps, the link goes up & down so network of that link 
+will transmit and drop immidately and transmit and drop and again and again 
+and it will have pressure on all routers cpu therefor to prevent this problem
+you have to advertise summary route and it is one of benefits of multi area 
+ospf networks. 
+ospf does not calculate metric and costs by ospf hello message. it will use
+LSA type 1 to calculate this.
+ 

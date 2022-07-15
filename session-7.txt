@@ -1,0 +1,31 @@
+Design     ---> Multitier---> 2 tier 			(traditional)
+			 ---> 3 tier 			(traditional)
+	   ---> VSS , VPC (DataCenter LAN), Stack       (traditional)
+	   ---> Routed access 	     			(traditional)
+
+	   ---> SDN ---> LISP 
+		    ---> VXLAN
+	   ---> Cisco DNA
+#spanning-tree vlan 2 priority 4096
+#spanning-tree vlan 2 root primary ---> decrease 8192 
+#spanning-tree vlan 2 root secondry ---> decrease 4096
+#show spanning-tree root 
+system-id-extension ---> means vlan 
+if)#spanning-tree vlan 1 cost 4 
+#spanning-tree mode rapid-pvst
+STP ----> direct failure   ---> 30 s  
+	  indirect failure --->	50 s 
+RSTP ---> direct failure   ---> 1 s
+     ---> indirect failure ---> no change (because in RSTP changes mean 
+interface goes up not interface goes down)
+switch in rstp connects to switch in stp mode operates in stp mode.
+RSTP port states ---> Discarding 
+	         ---> learning 
+	         ---> forwarding 
+RSTP port type  ---> RP
+	        ---> Edge Port
+		---> Point-To-Point Port
+when switch recognize one port works half duplex,fall back to stp in that port 
+because it does not have share type 
+when we connect device to rstp port it waits to recieve bpdu, if it does port type 
+become point to point, else it becomes edge port 

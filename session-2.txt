@@ -1,0 +1,34 @@
+if ip undrestand the dst ip is not in network, call arp protocol to get the 
+mac address of gateway (not get mac of dst machine).
+protocols in control plane have duty to prepare introduction for forwarding.
+switches learn mac address table based on dataplane traffics. 
+switch aging time is default 5 min.
+protocols like eigrp and ospf doesnot work with data at all but some others
+like bgp,vxlan,fabricpath work in dataplane & control plane. 
+CEF is protocol for Dataplane traffics(DP) not for management Plane(MP)
+or control plane(CP).
+CEF is hardware routing that take proccess from cpu.
+CEF is just for router not for switch. in switch based on CAM table hardware
+switching is done. so L2 forwarding does not engage CPU processing and the 
+performance of switching increase. it means CAM table has own processor. 
+it has ASEC/NPU(Network Processor Unite).
+vlan 0 is for qos. 
+#show vlan summary 
+#show vlan id 10 
+#show  vlan name FANI
+extended vlan 1006-4096
+(conf-if)# switchport access vlan name FANI
+macro command in cisco os.
+#show interafces trunk 
+if)#switchport trunk native-vlan ***
+#show mac-address-table dynamic ---> automatic learn
+#show interfaces status  ----> show duplex and switchport mode  
+#ipv6 address ***/64 ----> we can set lots of ipv6 address to interfaces 
+without secondry command 
+#switchport trunk allowed {vlan-ids | all | none | add vlan-ids | 
+remove vlan-ids | except vlan-ids}
+#show ipv6 interface brief | exclude unassigned|Gigabitethernet
+#clear mac address-table dynamic [{address mac-address | interface
+interface-id | vlan vlan-id}]
+#mac address-table static mac-address vlan
+ vlan-id {drop | interface interface-id}

@@ -1,0 +1,46 @@
+same layer intraction or adjacent---> two protocol in same layer negotiate 
+network devices: ----> hardware base
+		 ----> software base
+hardware base is more expensive because in software, all task is over cpu 
+but in hardware base any functionality has specific CPU called 
+ASIC(Application Specific Integrated Cpu). ASIC has proccessor called NPU
+(Network Processor Unit). when we say one switch is L2 Forwarding Cpu offloading 
+this means there is ASIC that handles L2 forwarding which doesnot get process
+from main cpu. CAM table is in memory which ASIC works with. exactly like 
+cpu which works with MAC address table. at first mac table will be created 
+then it copies in CAM table. CAM (Content Addressable Memory) table 
+is in ASIC memory. if there is no path in cam table it pass it to cpu to push 
+new path for destination in mac address table. searching mac in cam table
+has 2 item ---> True
+	   ---> False
+L2 forwarding search ---> exact match
+L3 forwarding search ---> longest match (how many bits matches in route. each one longer will be choosen like routing table) 
+		     ---> first match (the first matches like ACL)
+TCAM(Ternary CAM) ---> 3 matching item ----> True
+				       ----> False
+				       ----> dont care 
+TCAM ---> ACL             TCAM is memory of ASICs which is for L3 functions 
+     ---> QOS
+     ---> Route
+
+forwarding ----> distributed ---> its Hardware cef ---> use ASIC ---> used in chassis and stackable devices ---> should install card named DFC to support cef in every line card
+	   ----> centralized ---> DP and CP is done by CPU ---> process switching ---> software forwarding (or slow path switching) ---> every packet should handle by cpu
+							   ---> fast switching ----> route once, switch many (route catching) ---> first packet handle by cpu and others is flow base forwarding 
+							   ---> CEF ---> software --->
+								    ---> hardware ---> 
+some types of packets can not be switched by CEF ---> 1. management plane and control plane
+						  ---> 2. complex packet (like ip option in ip header)
+						  ---> 3. packets that require more info (like arp that needs dst mac)
+						  ----> 4. vpn packets
+						  ----> 5. NAT traffic
+						 ----> 6. fragmented packets
+						----> 7.ttl expired packets 
+these packets should be punted to cpu for process switching  
+for routing in every ethernet network arp should go and find mac of gw 
+for forward packet to next ethernet network. so router should handle L2 forwarding 
+and L3 forwarding. better to say with L3 addressing traffic can not be sent.
+in routers which support CEF: 
+	TCAM of Routing table ---> FIB 
+	TCAM of L2 frwarding (from arp table)  ---> adjacency table
+	change mac address in every ethernet network ---> Rewrite Engine 
+#show module

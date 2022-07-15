@@ -1,0 +1,32 @@
+in rstp even when root switch was selected, each switch sends bpdu every two
+minute. 
+rstp was not enabled in edge ports. each switche sends proposal on other hand ports.
+then recives aggrement. this process called synchronization. proposal will
+be sent in DP port. synchronizatoin dont work on edge port. 
+rstp on every port will wait time about 3 bpdu to know type of port(edge or P2P)
+so in rstp we dont need portfast & bpdu guard. diameter in stp is 7 so 
+max 14 will take to reach bpdu to last switch. so max distinct between root switch 
+and last switch is 7 layer. if you want to have more layer you have to change diameter
+in root switch. direct and indirect changes times is based on diameter so 
+if you change diameter with below command the stp timers will changes.
+#spanning-tree vlan 2 root primary diameter 2
+we can trace mac on cisco swithces depend on enabling cdp or lldp. 
+bpdu guard breaches ---> error disable 
+root guard breaches ---> port goes to broken(or inconsistancy) states (it should be enabled in
+DP ports in root switch)
+if)#spanning-tree guard root
+#show spanning-tree inconsistant port
+#spanning-tree portfast bpduguard default ---> enable for all ports
+if)# spanning-tree bpduguard enable/disable
+# errdisable recovery cause bpdug
+# errdisable recovery interval time-seconds
+bpdu filter ---> no bpdu send and recieve
+bpdu guard  ---> no bpdu recieve
+#spanning-tree portfast bpdufilter default ---> enable for all ports
+bpdu filter is for seprating stp network (no need in LAN)
+if)# spanning-tree bpdufilter enable/disable
+if)# spanning-tree guard loop
+if superior bpdu was not recieve by RP but link stay up, we get envolved of
+loop in this moment we enable loop guard (should be enable in root ports)
+it checks why does not recieve bpdu if link is down or we have traffic from 
+that.

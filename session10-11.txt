@@ -1,0 +1,7 @@
+. VTP Version 3 allows for the full
+range of VLANs 1 to 4094. At the time of this writing, most switches should be 
+capable of running VTP Version 3.
+summary advertisement occurs every 300 seconds or when a VLAN is added.
+. Typically, client request message occure when a switch with a lower revision
+number joins the VTP domain and observes a summary advertisement with a higher
+revision than it has stored locally.

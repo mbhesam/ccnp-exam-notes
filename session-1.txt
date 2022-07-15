@@ -1,0 +1,44 @@
+VPN: outer packet ---> transport packet  innner packet ----> passenger packet
+ethernet version of now : 2 
+L7,L6,L5 ----> data
+L4 ----> segment
+L3 ----> packet
+L2 ----> frame
+ethernet header: 
+preamble | SFD | dst.mac | src.mac | dot1q | ether.type | payload | trailer
+payload -->46-1500(size of mtu can be increased by 9216 called jumbo frame)
+trailer ---> 4 
+dot1q ---> 4 
+type ---> 2 
+src and dst mac ---> 6 
+preamble ---> 56 bit 
+SFD ---> 8 bit 
+ethernet header size : 18 with dot1q and without it 14 
+so all of packet with max payload and headers is 1522 
+preamble----> 1010101... ---> case to know start of ethernet header and 
+end of last frame because size of frames are diffrent from each other when
+comming through switch 
+SFD (start frame delimeter) ----> 101010111 --> case to know start of ethernet header and 
+end of last frame because size of frames are diffrent from each other when
+comming through switch 
+L2 error detection algorithm ----> CRC and FCS  
+changing signals to frame encoding and reverses named as decoding
+IP header ---> 20 without ip option 
+MTU ---> 1500 ( 1460 data + 20 ip header + 20 tcp header)
+tcp ptrotocol segment data based on MSS (1460) and deliver to ip protocol 
+if packet was upper than MTU , IP should do fragmentation and make DF header
+1 that means data is fragmented so other routers doesnot send fragmented 
+packets because it is security risks . some hackers fragmente malwares for
+not to be blocked by firewalls.  
+vlan ranges: 0-4096(2^12)
+protocol IDs(ip types): 
+	tcp=6,udp=17,icmp=1,igmp=2,GRE=47,ospf=89,eigrp=88 
+dot1q:  ---> 2B ---> TPID (tag protocol ID)---> case to undrestand if there is tag 
+		(TPID ---> 0x8100 if there is dot1q tag) 
+        ---> 2B --->TCI (Tag Control information) ---> 12 bit for vlan ID 
+			+ 3 bit pcp(tag for L2 qos named as COS (IEEE 802.1p))
+			+ 1 bit DEI (not for ethernet its for congestion dropping)
+ethernet type (for calling destination protocol) ---> 2 ---> ipv4 ---> 0x0800
+			  ipv6 ---> 0x0806
+some times it didnot deliver to upper layer,it delivers 
+to protocols in same layer like lldp , cdp , pagp 

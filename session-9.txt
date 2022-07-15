@@ -1,0 +1,38 @@
+udld (unidirectional link detector) ---> can detect when one fiber optic link
+has failure on send or recieve thread (in this situation because we dont have 
+recieve or send traffic stp think should bring up alternative link in topology) 
+udld check fiber link every 15 sec.
+udld modes ---> normal ---> just send snmp message but didnt change link status 
+	   ---> aggressive ---> make link down 
+#udld enable ---> enable udld on all links
+#udld enable aggressive
+-if)#udld port 
+-if)#udld port aggressive 
+when one link goes down because of udld aggressive mode you have to set
+this command : 
+-if)#udld reset 
+-if)#udld recovery 15 ---> 15 sec after goes up 
+#show udld int e 0/0
+#show udld neighbours
+#errdisable recovery cause bpduguard 
+#errdisable recovery interval 15 ---> set recovery 
+stp ---> IEEE 802.1D
+rstp ---> IEEE 802.1W
+mstp ---> IEEE 802.1S
+imagine you have 100 vlans so in pvst or rstp in every 2 sec 100 bpdu transfer 
+so IEEE decide to release mst. in mst we can have instance and assign some of 
+vlans to  each instance so less and effective bpdu will transfer.
+in fact every 2 sec just 1 bpdu will send even we have lots of instances.
+all of stp instance information keep in 1 bpdu.  
+MST system-id-extension ---> instance id 
+#spanning-tree mode mst 
+#spanning-tree mst 1 root primary 
+#spanning-tree mst 1 priority 4096
+#spanning-tree mst configuration 
+config-mst)# name tehrantrain
+config-mst)# revision 6
+config-mst)# instance 1  vlan 20,30
+# show spanning-tree mst configuration
+all vlans are default in instance 0 so best practice is to bring all active 
+vlans from instance 0 
+mst works in long mode 

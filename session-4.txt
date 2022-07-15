@@ -1,0 +1,26 @@
+#ip cef distributed ---> switches which are stackable or modular 
+#ip cef   ---> centrelized cef enable 
+in every line cards we have to insatll DFC in line cards and supervisor engine
+should have MSFC 
+combo ports in devices are used for two option fiber or ethernet that 
+you can use just one of them
+Distributed cef can forward traffic between every linecards without engage 
+supervisor engine. but in centeralized cef each traffic between line cards 
+should go through supervisor engine and MSFC.
+SSO is redundancy feature that allows two sup engine (RP(Route Processor))
+negotiate for active and passive candidate
+supervisor ENgine redundancy mode ---> RPR ---> 2 min down time
+				  ---> RPR+ ---> 30 sec down time
+				  ---> SSO ---> 1 sec down time
+even with sso routing table will lost if active sup crashes. dynamic routing
+protocol should have feature called NSF(None Stop Forwarding) for integrating 
+with SSO featuer. when master sup goes down, interfaces will shut down and this
+makes all neighbour ship will lose immidatly. so if you enable NSF neighbourship
+will remain. 
+dont forget NSF is just used in modular Switches which both two sup engine 
+if link of one routing neighbourship goes down all neighbourship lose immidatley. 
+both of routers in neighbourship should support NSF. 
+CEF ---> FIB
+    ---> AIB
+    ---> Rewrite Engine
+#show redundancy state

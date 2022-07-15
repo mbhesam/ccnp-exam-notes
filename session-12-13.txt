@@ -1,0 +1,37 @@
+------------------ blackhole
+#ip route 172.16.0.0 255.255.240.0 Null0
+------------------ ipv6 routing 
+R1# configure terminal
+Enter configuration commands, one per line. End with CNTL/Z.
+R1(config)# ipv6 unicast-routing
+R1(config)# ipv6 route 2001:db8:22::/64 2001:db8:12::2  
+------------------ vrf configuration
+R1(config)# interface GigabitEthernet0/1
+R1(config-if)# ip address 10.0.3.1 255.255.255.0
+R1(config)# interface GigabitEthernet0/2
+R1(config-if)# ip address 10.0.4.1 255.255.255.0
+R1(config)# vrf definition MGMT
+R1(config-vrf)# address-family ipv4
+R1(config)# interface GigabitEthernet0/3
+R1(config-if)# vrf forwarding MGMT
+R1(config-if)# ip address 10.0.3.1 255.255.255.0
+R1(config)# interface GigabitEthernet0/4
+R1(config-if)# vrf forwarding MGMT
+R1(config-if)# ip address 10.0.4.1 255.255.255.0
+-------------------ospf
+R1# show ip ospf interface brief
+Nbrs F ---> The number of neighbor OSPF routers for a segment that are 
+fully adjacent
+Nbrs C ---> The number of neighbor OSPF routers for a segment that have been
+detected and are in a 2-Way state
+default route configuration:
+#ip route 0.0.0.0 0.0.0.0 100.64.1.2
+#router ospf 1
+-router)#network 10.0.0.0 0.255.255.255 area 0
+-router)#default-information originate
+The DR/BDR election occurs during OSPF neighborship—specifically during the last phase
+of 2-Way neighbor state and just before the ExStart state. When a router enters the 2-Way
+state, it has already received a hello from the neighbor. If the hello packet includes a RID
+other than 0.0.0.0 for the DR or BDR, the new router assumes that the current routers are the
+actual DR and BDR
+-if)# ip ospf priority 100
